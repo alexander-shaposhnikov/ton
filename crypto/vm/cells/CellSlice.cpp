@@ -76,7 +76,8 @@ CellSlice::CellSlice(NoVmSpec, Ref<Cell> ref) : CellSlice(load_cell_nothrow(std:
 }
 CellSlice::CellSlice(Ref<DataCell> ref) : CellSlice(VirtualCell::LoadedCell{std::move(ref), {}, {}}) {
 }
-CellSlice::CellSlice(const CellSlice& cs) = default;
+
+//CellSlice::CellSlice(const CellSlice& cs) = default;
 
 bool CellSlice::load(VirtualCell::LoadedCell loaded_cell) {
   virt = loaded_cell.virt;

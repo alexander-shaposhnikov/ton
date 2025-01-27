@@ -56,8 +56,8 @@ class CellSlice : public td::CntObject {
   CellSlice(Ref<DataCell> dc_ref, unsigned _bits_en, unsigned _refs_en, unsigned _bits_st = 0, unsigned _refs_st = 0);*/
   CellSlice(const CellSlice& cs, unsigned _bits_en, unsigned _refs_en);
   CellSlice(const CellSlice& cs, unsigned _bits_en, unsigned _refs_en, unsigned _bits_st, unsigned _refs_st);
-  CellSlice(const CellSlice&);
-  CellSlice& operator=(const CellSlice& other) = default;
+  //CellSlice(const CellSlice&);
+  //CellSlice& operator=(const CellSlice& other) = default;
   CellSlice();
   Cell::LoadedCell move_as_loaded_cell();
   td::CntObject* make_copy() const override {

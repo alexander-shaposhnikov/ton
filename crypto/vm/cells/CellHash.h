@@ -29,7 +29,11 @@ class StringBuilder;
 
 namespace vm {
 struct CellHash {
+  CellHash() = default;
+
  public:
+
+
   td::Slice as_slice() const {
     return td::Slice(hash_.data(), hash_.size());
   }
@@ -69,10 +73,30 @@ struct CellHash {
     return res;
   }
 
+  uint32_t as_uint32() const {
+    static_assert(CellTraits::hash_bytes == 32);
+    uint32_t ret;
+    std::memcpy(&ret, hash_.data(), sizeof(ret));
+    return ret;
+  }
+
  private:
   std::array<td::uint8, CellTraits::hash_bytes> hash_;
 };
 }  // namespace vm
+
+/*
+namespace std {
+
+template <>
+struct hash<vm::CellHash> {
+  size_t operator() (const vm::CellHash &h) const {
+    return std::hash<uint32_t>{}(h.as_uint32());
+  }
+};
+
+};
+*/
 
 inline size_t cell_hash_slice_hash(td::Slice hash) {
   // use offset 8, because in db keys are grouped by first bytes.
@@ -84,7 +108,8 @@ struct hash<vm::CellHash> {
   typedef vm::CellHash argument_type;
   typedef std::size_t result_type;
   result_type operator()(argument_type const& s) const noexcept {
-    return cell_hash_slice_hash(s.as_slice());
+    return std::hash<uint32_t>{}(s.as_uint32());
+    //return cell_hash_slice_hash(s.as_slice());
   }
 };
 }  // namespace std

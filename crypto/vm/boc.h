@@ -19,6 +19,8 @@
 #pragma once
 #include "td/utils/CancellationToken.h"
 
+#include <unordered_set>
+
 #include <set>
 #include <map>
 #include "vm/db/DynamicBagOfCellsDb.h"
@@ -101,7 +103,10 @@ class NewCellStorageStat {
 
  private:
   const CellUsageTree* usage_tree_;
-  std::set<vm::Cell::Hash> seen_;
+
+  //std::set<vm::Cell::Hash> seen_;
+  std::unordered_set<vm::Cell::Hash> seen_;
+
   Stat stat_;
   std::set<vm::Cell::Hash> proof_seen_;
   Stat proof_stat_;

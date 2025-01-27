@@ -33,7 +33,23 @@ cmake -G Ninja -DCMAKE_CXX_FLAGS="$OPT_CXX_FLAGS" -DCMAKE_C_FLAGS="$OPT_CXX_FLAG
 
 cmake --build . --target contest-grader -j
 
-./run_tests.sh 2>&1 | grep CPU
+N=10
 
+for i in `seq $N`; do
+  rm -f log$i
+done
 
+for i in `seq $N`; do
+  ./run_tests.sh 2>&1 | grep CPU | tail -n 1 | cut -d ' ' -f 8 >log$i
+done
+
+sum=0
+for i in `seq $N`; do
+  num=$(cat "log$i")
+  sum=$(bc <<< "$sum + $num")
+done
+
+A=$(bc -l <<< "1000 * $sum/$N")
+
+echo "average = $A"
 

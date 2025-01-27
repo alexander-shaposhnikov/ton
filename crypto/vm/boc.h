@@ -105,7 +105,8 @@ class NewCellStorageStat {
   const CellUsageTree* usage_tree_;
 
   //std::set<vm::Cell::Hash> seen_;
-  std::unordered_set<vm::Cell::Hash> seen_;
+  //std::unordered_set<vm::Cell::Hash> seen_;
+  absl::flat_hash_set<vm::Cell::Hash> seen_;
 
   Stat stat_;
   std::set<vm::Cell::Hash> proof_seen_;

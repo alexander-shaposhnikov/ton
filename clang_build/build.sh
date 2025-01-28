@@ -2,10 +2,12 @@
 
 rm -rf CMakeCache.txt
 
+LLVM_HOME="`realpath ../llvm_toolchain/llvm-project/`"
+
 cmake -G Ninja \
   -DCMAKE_LINKER_TYPE=LLD \
-  -DCMAKE_C_COMPILER=$HOME/my_llvm_fork/llvm-project/build/bin/clang \
-  -DCMAKE_CXX_COMPILER=$HOME/my_llvm_fork/llvm-project/build/bin/clang++ ../ \
+  -DCMAKE_C_COMPILER=$LLVM_HOME/build/bin/clang \
+  -DCMAKE_CXX_COMPILER=$LLVM_HOME/build/bin/clang++ ../ \
   -DCMAKE_BUILD_TYPE=Release
 
 cmake --build . --target contest-grader -j
